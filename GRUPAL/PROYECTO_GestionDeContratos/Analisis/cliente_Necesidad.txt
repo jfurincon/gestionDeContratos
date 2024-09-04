@@ -1,0 +1,5 @@
+2.1. Cliente
+Freddy Urrego es el gerente general de Servicios Especializados M&G, quien necesita solucionar su problema de documentación en sus contratos y relación con la cámara de comercio.
+
+2.2. Necesidad
+La empresa servicios especializados M&G realiza el cumplimiento de varios contratos de Instalación, construcción, dotación, entre otros mediante el SECOP . Todo lo referente a estos documentos existen de manera digital y desorganizada. Se requiere un fácil acceso a cada uno de los documentos y la información de cada contrato (Número en el RUP (Registro único de proponentes), fechas de inicio y final, valor del contrato, documentos anexos, etc.). Además, hay problema de que cada contrato contiene códigos referidos a la actividad de cada contrato y para proponer la contratación del estado, se piden requerimientos basados en los códigos (para saber si la empresa tiene o no experiencia en cierta actividad) y es muy difícil saber que contratos de la empresa tienen esa experiencia.
