@@ -75,4 +75,39 @@ TO cantidadMascota;
 ALTER TABLE mascota_vacuna
 RENAME detalleVacuna;
 
+/*
+Sentencias de consulta {General y específica (multitabla, subconsultas)},
+registros, modificaciones, eliminaciones, triggers y vistas.
+Para las CRUD
+ - en create utilizamos INSERT INTO tabla values(valor)
+ - en read utilizamos SELECT (* para consultar cualquiera) FROM tabla 
+ - en update utilizamos UPDATE
+ - en delete utilizamos DELETE
+*/
+
+describe mascota;
+INSERT INTO mascota values(1,"Trufa","F","Pastor Australiano",1);
+INSERT INTO mascota values(2, "Mauricio","M","Calico",1),(3,"Machini","M","Shih-Tzu",1);
+# jugando con valores null
+INSERT INTO mascota values(4,"","","","");
+SELECT * FROM mascota;
+
+# se deben iniciar a hacer registros en tablas que no tienen llaves foráneas
+
+INSERT INTO vacuna values(1,"Parvirosis",2,"Parvirosis");
+INSERT INTO vacuna values(2,"Rabia",1,"Rabia");
+
+describe cliente;
+INSERT INTO cliente values(1000273164,"Juan Felipe","Urrego","Calle 163","3505950549",1);
+# aqui telefono es int, pero lo introducimos como un varchar, además es un int(10)
+SELECT * FROM cliente;
+
+describe producto;
+INSERT INTO producto values(1,"Cepillo Largo","DogClean",6000,1000273164,1),(2,"Croqueta XL","DogFood",8000,1000273164,2);
+SELECT * FROM producto;
+
+describe detallevacuna;
+INSERT INTO detallevacuna values(1,1,"Parvirosis");
+INSERT INTO detallevacuna values(2,1,"Rabia");
+SELECT * FROM detallevacuna;
 
