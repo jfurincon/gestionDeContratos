@@ -29,7 +29,7 @@ cedulaCliente int(100)
 );
 
 DROP TABLE venta;
-CREATE TABLE venta( #numeroOrdenPK, idVenta autoincrement
+CREATE TABLE venta( # fecha,subtotal(precioventa),cantidad
 numeroOrden int(255) primary key,
 idVenta int(255),
 idUsuarioFK int(10),
@@ -37,7 +37,7 @@ idClienteFK int(100)
 );
 
 DROP TABLE productoVenta;
-CREATE TABLE productoVenta( #codigoDeBarrasFK, numeroOrdenFK
+CREATE TABLE productoVenta(
 codigoBarrasFK int(100) not null,
 numeroOrdenFK int(255) not null,
 cantidad int(255),
@@ -72,14 +72,43 @@ describe usuario;
 INSERT INTO usuario values("","Usuario1"),("","Usuario2"),("","Usuario3"),("","Usuario4");
 
 describe producto;
+INSERT INTO producto values(1,191817,"Shampoo J&J",12000),(2,191818,"Shampoo Old Spice",15000),(3,191819,"Shampoo H&S",12500);
+
+describe venta;
+INSERT INTO venta values(1,122,1,1);
+INSERT INTO venta values(2,1223,2,2),(3,1224,3,3);
+
+describe productoventa;
+INSERT INTO productoventa values(191817);
 
 
 
+use ventas;
 
 #promedio ventas
 
+
+
 # sumatoria total ventas
-
+#SELECT sum(precio) FROM producto;
 # cantidad de clientes
-
+#SELECT count(idCliente) FROM cliente;
 # venta mas economica hecha
+#SELECT min(precio) FROM producto;
+
+SELECT * FROM venta INNER JOIN cliente ON venta.idClienteFK=cliente.idCliente;
+
+# consultar el cliente de la maxima venta hecha
+SELECT venta.idClienteFK, productoventa.total, cliente.nombreCliente, cliente.idCliente
+FROM venta
+INNER JOIN cliente ON cliente.idCliente = venta.idClienteFK
+INNER JOIN productoventa ON productoventa.idOrdenFK = venta.idOrden
+WHERE total=max(total) 
+
+# consultar usuario y cliente de una venta
+#SELECT venta.idUsuarioFK, venta.idClienteFK, cliente.nombreCliente, cliente.idCliente
+#FROM
+
+# consultar los productos que compró un cliente específico
+
+# consultar todos los clientes que han hecho una orden
