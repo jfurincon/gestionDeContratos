@@ -36,6 +36,15 @@ idUsuarioFK int(10),
 idClienteFK int(100)
 );
 
+use ventas;
+ALTER TABLE venta
+ADD COLUMN fechaVenta date;
+
+ALTER TABLE venta
+ADD COLUMN subtotal int(15);
+
+describe venta;
+
 DROP TABLE productoVenta;
 CREATE TABLE productoVenta(
 codigoBarrasFK int(100) not null,
@@ -77,6 +86,9 @@ INSERT INTO producto values(1,191817,"Shampoo J&J",12000),(2,191818,"Shampoo Old
 describe venta;
 INSERT INTO venta values(1,122,1,1);
 INSERT INTO venta values(2,1223,2,2),(3,1224,3,3);
+INSERT INTO venta
+values(4,001,1,1,"27/09/2024",10000);
+SELECT * FROM venta;
 
 describe productoventa;
 INSERT INTO productoventa values(191817);
@@ -103,12 +115,52 @@ SELECT venta.idClienteFK, productoventa.total, cliente.nombreCliente, cliente.id
 FROM venta
 INNER JOIN cliente ON cliente.idCliente = venta.idClienteFK
 INNER JOIN productoventa ON productoventa.idOrdenFK = venta.idOrden
-WHERE total=max(total) 
+WHERE total=max(total); 
 
 # consultar usuario y cliente de una venta
 #SELECT venta.idUsuarioFK, venta.idClienteFK, cliente.nombreCliente, cliente.idCliente
 #FROM
+SELECT usuario.nombreUsuario, cliente.nombreCliente, v.numeroOrden 
+FROM venta v 
+JOIN usuario u ON v.idUsuarioFK = u.idUsuario 
+JOIN cliente c ON v.idClienteFK = c.idCliente 
+WHERE v.numeroOrden = 1004;
 
 # consultar los productos que compró un cliente específico
-
+SELECT p.descripcionProducto, pv.cantidad, pv.total
+FROM producto_venta pv 
+JOIN venta v ON pv.numeroOrdenFK = v.numeroOrden 
+JOIN producto p ON pv.codigoBarrasFK = p.codigoBarras
+WHERE v.idClienteFK = 2; 
+ 
 # consultar todos los clientes que han hecho una orden
+SELECT c.nombreCliente 
+FROM cliente c 
+JOIN venta v ON c.idCliente = v.idClienteFK 
+GROUP BY c.idCliente, c.nombreCliente;
+
+# MODIFICACIONES (registros)
+/*
+UPDATE tabla
+SET campo= x
+WHERE campo2 = y;
+*/
+
+describe cliente;
+describe usuario;
+describe producto;
+describe venta;
+describe productoventa;
+#registrar a tatiana, registrar ropa para bebés, registrarme como usuario. Generar una venta para tatiana (nus como us, y producto de bebes)
+INSERT INTO cliente values('',"Tatiana Cabrera",543544446);
+INSERT INTO usuario values('',"Juan Felipe Admin");
+INSERT INTO producto values(1112,'',"Arruru Bebes",8000);
+INSERT INTO venta values(12,12,"Juan Felipe Admin","Tatiana Cabrera","27/09/2024",8000);
+INSERT INTO venta values(13,13,5,5,"2024/09/27", 16000);
+INSERT INTO productoventa values(191820, 13, 2, 16000);
+
+SELECT * FROM producto;
+SELECT * FROM venta;
+SELECT * FROM usuario;
+SELECT * FROM cliente;
+# numero de orden 20240927
