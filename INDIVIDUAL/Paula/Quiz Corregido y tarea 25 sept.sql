@@ -122,3 +122,44 @@ SELECT c.nombreCliente
 FROM cliente c 
 JOIN venta v ON c.idCliente = v.idClienteFK 
 GROUP BY c.idCliente, c.nombreCliente;
+
+/*Registrar a Tatiana como cliente*/
+/*Registrar un producto de la tienda "ropa para bebe"*/
+/*Registrarme yo como usuario de la bd*/
+/*Generar una venta, asignarle nombre de tatiana como cliente, yo como usuario y el producto que se registro*/
+
+DESCRIBE cliente;
+
+INSERT INTO cliente VALUES ("",'Tatiana Cabrera', '123456789', 'Calle 19#54b,Bogota');
+
+DESCRIBE producto;
+
+INSERT INTO producto VALUES ("",'987654321', 'baberos', 8500);
+
+DESCRIBE usuario;
+
+INSERT INTO usuario VALUES ("","Vanessa Blanco", "Vendedora");
+
+SELECT * FROM usuario;
+SELECT * FROM cliente;
+DESCRIBE venta;
+INSERT INTO venta VALUES (6,6,0,8520);
+
+SELECT * FROM venta;
+
+DESCRIBE producto_venta;
+SELECT * FROM producto;
+INSERT INTO producto_venta VALUES (987654321,8520,8500,1);
+SELECT * FROM producto_venta;
+
+UPDATE venta SET idVentas = 20240927 WHERE numeroOrden = 8520;
+
+UPDATE cliente SET nombreCliente = "Tatiana Cabrera Vargas" WHERE idCliente = 6;
+SELECT * FROM cliente;
+
+UPDATE cliente SET telefonoCliente = 3144606918 WHERE idCliente = 6;
+SELECT * FROM cliente;
+DESCRIBE cliente;
+ALTER TABLE cliente CHANGE telefonoCliente telefonoCliente varchar (100);
+UPDATE cliente SET direccionCliente = "Cll 104 # 13-14" WHERE idCliente = 6;
+
