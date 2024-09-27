@@ -159,8 +159,32 @@ INSERT INTO venta values(12,12,"Juan Felipe Admin","Tatiana Cabrera","27/09/2024
 INSERT INTO venta values(13,13,5,5,"2024/09/27", 16000);
 INSERT INTO productoventa values(191820, 13, 2, 16000);
 
+UPDATE venta SET idVenta = 20240927 WHERE numeroOrden =  13;
+# creacion de nuevos campos en cliente
+ALTER TABLE cliente
+ADD COLUMN apellido varchar(100);
+
+ALTER TABLE cliente
+ADD COLUMN direccion varchar(100);
+
+UPDATE cliente SET apellido = "Cabrera" WHERE idCliente = 5;
+UPDATE cliente SET nombreCliente = "Tatiana" WHERE idCliente = 5;
+UPDATE cliente SET direccion = "CALLE 104 #13-14" WHERE idCliente = 5;
+
 SELECT * FROM producto;
 SELECT * FROM venta;
 SELECT * FROM usuario;
 SELECT * FROM cliente;
-# numero de orden 20240927
+
+# se intenta cambiar el idCliente
+UPDATE cliente SET idCliente = 55163118 WHERE idCliente = 5;
+# creo nuevo cliente con los datos buenos
+describe cliente;
+INSERT INTO cliente values(55163118, "Tatiana",54356674,"Cabrera","Calle 116 #14-13");
+# para eliminar el cliente antiguo debo modificar la relacion con venta
+UPDATE venta SET idClienteFK = 55163118 WHERE numeroOrden = 13;
+# y ahora que ya no hay relacion con el id anterior, se puede eliminar el cliente viejo
+DELETE FROM cliente WHERE idCliente = 5;
+
+
+# delete from lala where lala = x
