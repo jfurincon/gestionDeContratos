@@ -188,3 +188,120 @@ DELETE FROM cliente WHERE idCliente = 5;
 
 
 # delete from lala where lala = x
+
+# PROCEDIMIENTOS ALMACENADOS, SUBCONSULTAS, Y VISTAS.
+use ventas;
+/*Los procedimientos almacenados nos ayudan a crear subrutinas
+de consulta. 
+Estructura:
+
+DELIMITER//
+CREATE PROCEDURE nombreProcedimiento(parametros)
+BEGIN
+--Lógica de la sentencia que se quiera utilizar
+END//
+DELIMITER;
+
+*/
+
+# crear un procedimiento para haceer registros de usuarios
+DELIMITER //
+CREATE PROCEDURE registrarProductos(id int(255),codigoBarras int(100),nombre varchar(100),precio int(100))
+BEGIN
+INSERT INTO producto values(id,codigoBarras,nombre,precio);
+END//
+DELIMITER ;
+describe producto;
+
+# utilizar el procedimiento
+CALL registrarProductos(6667,'',"Crema Colgate Carbon",23000);
+# tambien se pueden eliminar los procedimientos con 
+# DROP PROCEDURE nombreProcedimiento
+
+/*Las vistas se utilizan en contextos de consultas muy complejas
+CREATE VIEW nombreVista 
+SELECT whawha FROM lala
+
+y luego para ver la vista
+SELECT aja FROM nombreVista
+*/
+
+use ventas;
+describe cliente;
+SELECT * FROM cliente;
+
+ALTER TABLE cliente
+ADD COLUMN estado boolean;
+
+# procedimiento para inactivar cliente
+DELIMITER //
+CREATE PROCEDURE inactivarCliente(id int(100))
+BEGIN
+UPDATE cliente
+SET estado = 0
+WHERE idCliente = id;
+END//
+DELIMITER ;
+
+CALL inactivarCliente(2);
+
+# procedimiento para consultar productos que ha comprado un cliente
+describe venta;
+describe productoventa;
+describe producto;
+SELECT * FROM productoventa;
+SELECT * FROM venta;
+SELECT * FROM producto;
+
+/*
+Para esto debemos mirar la venta asociada al id del cliente
+luego mirar el codigo de barras (producto) que se encuentra en esa venta
+esto se logra por medio de la tabla débil
+*/
+
+DELIMITER //
+CREATE PROCEDURE consultarProductoCliente(id int(255))
+BEGIN
+SELECT p.nombreProducto
+FROM cliente c
+INNER JOIN venta v ON c.idCliente = v.idClienteFK
+INNER JOIN productoventa pv ON v.numeroOrden = pv.numeroOrdenFK
+INNER JOIN producto p ON pv.codigoBarrasFK = p.codigoBarras
+WHERE c.idCliente = id;
+END//
+DELIMITER ;
+
+CALL consultarProductoCliente(55163118);
+
+# Procedimiento para modificar fecha de nacimiento de un cliente
+describe cliente;
+SELECT * FROM cliente;
+
+ALTER TABLE cliente
+ADD COLUMN fechaNacimiento date;
+
+DELIMITER //
+CREATE PROCEDURE nuevaFechaNac(id int(255), fecha varchar(255))
+BEGIN
+UPDATE cliente
+SET fechaNacimiento = fecha
+WHERE idCliente = id; 
+END//
+DELIMITER ;
+
+CALL nuevaFechaNac(1,"2002/09/05");
+
+# vista que me consulte que cliente compró un producto y cual fue su # de orden
+CREATE VIEW productoCliente AS
+SELECT c.nombreCliente, p.nombreProducto, v.numeroOrden, p.codigoBarras
+FROM cliente c
+INNER JOIN venta v ON c.idCliente = v.idClienteFK
+INNER JOIN productoventa pv ON pv.numeroOrdenFK = v.numeroOrden
+INNER JOIN producto p ON p.codigoBarras = pv.codigoBarrasFK;
+
+SELECT * FROM productoCliente
+WHERE codigoBarras = 191820;
+
+# vista que me muestre el cliente que mas compras haya hecho
+
+
