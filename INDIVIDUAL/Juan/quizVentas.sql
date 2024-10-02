@@ -304,4 +304,49 @@ WHERE codigoBarras = 191820;
 
 # vista que me muestre el cliente que mas compras haya hecho
 
+/*
+SUBCONSULTAS: una consulta dentro de una consulta. 
+
+SELECT campox, campoy, campoz
+FROM tabla
+WHERE campox = (SELECT columna2x FROM tablainicial WHERE condicion);
+*/
+
+# Consultar los datos de los empleados y su sueldo promedio
+/*
+SELECT idEmpleado, nombreEmpleado, salario, (SELECT avg(salario) FROM empleado) AS promedio
+FROM empleado;
+*/
+
+# consultar el empleado que tenga un salario mayor que el salario promedio
+/*
+SELECT idEmpleado, nombreEmpleado, salario
+FROM empleado
+WHERE salario > (SELECT avg(salario) FROM empleado)
+*/
+
+# consultar a que area pertenece un empleado
+/*
+SELECT idEmpleado, nombreEmpleado, idArea, nombreArea
+FROM empleado
+WHERE idArea in (SELECT idArea FROM area WHERE nombreEmpleado="Tatiana")
+*/
+
+use ventas;
+
+describe producto;
+# mostrar los productos que se vendan a un precio mayor del promedio de todos los productos
+SELECT nombreProducto, precioProducto
+FROM producto
+WHERE precioProducto > (SELECT avg(precioProducto) FROM producto);
+
+describe venta;
+describe cliente;
+# mostrar los clientes que el total de compra sea mayor al promedio de compras de la tienda
+SELECT nombreCliente, apellido, idCliente
+FROM cliente
+WHERE idCliente in (SELECT idCliente FROM venta WHERE subtotal > (SELECT avg(subtotal) FROM venta));
+
+# mostrar el promedio de precios de productos comprados por clientes
+SELECT
 
