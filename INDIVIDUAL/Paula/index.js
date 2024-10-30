@@ -36,7 +36,7 @@ app.post('/users', async(req,res)=>{
 
         res.status(400).send(error)
     }
-})
+});
 
 //Consultar los usuarios
 
@@ -49,7 +49,7 @@ app.get('/users', async(req,res)=>{
 
         res.status(500).send(error)
     }
-})
+});
 
 //Consultar usuario por id 
 
@@ -63,7 +63,7 @@ app.get('/users/:id', async(req,res)=>{
 
         res.status(500).send(error)
     }
-})
+});
 
 //Actualizar un usuario 
 
@@ -77,7 +77,18 @@ app.get('/users/:id', async(req,res)=>{
 
         res.status(400).send(error)
     }
-})
+});
 
 //Eliminar
 
+app.delete('/user/:id', async (req, res) => {
+    try{
+        const user = await user.findByIdAndDelete(req.params.id);
+        if(!user){
+            return res.status(404).send();
+        }
+        res.status(200).send(user);
+    }catch(error){
+        res.status(400).send(error);
+    }
+});
