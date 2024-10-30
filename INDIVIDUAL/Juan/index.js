@@ -9,7 +9,7 @@ const PORT = 3000;
 app.use (express.json());
 
 //conexion BD
-mongoose.connect('mongodb://localhost:27017/BDMongo',{
+mongoose.connect('mongodb://localhost:27017/MyDB',{
     useNewURLParser: true,
     useUnifiedTopology: true
 }).then(()=>console.log('Se conecto a MongoDB'))
@@ -22,13 +22,13 @@ app.listen(PORT,()=>{
 
 // agregar las rutas para manupular los datos
 
-const user = require('./user.js');
+const User = require('./users/user');
 
 // Registrar un usuario nuevo
 
-app.post('/user', async (req, res) => {
+app.post('/users', async (req, res) => {
     try{
-        const user = new user(req.body);
+        const user = new User(req.body);
         await user.save();
         res.status(201).send(user);
     }catch(error){
@@ -38,9 +38,9 @@ app.post('/user', async (req, res) => {
 
 // consultar todos los usuarios
 
-app.get('/user', async (req, res) => {
+app.get('/users', async (req, res) => {
     try{
-        const users = await user.find();
+        const users = await User.find();
         res.status(201).send(users);
     }catch(error){
         res.status(400).send(error);
@@ -49,9 +49,9 @@ app.get('/user', async (req, res) => {
 
 // consultar un usuario por id
 
-app.get('/user/:id', async (req, res) => {
+app.get('/users/:id', async (req, res) => {
     try{
-        const user = await user.findById(req.params.id);
+        const user = await User.findById(req.params.id);
         if(!user){
             return res.status(404).send();
         }
@@ -61,11 +61,11 @@ app.get('/user/:id', async (req, res) => {
     }
 });
 
-// actualizar un usuario por id
+// actualizar un usuario por id (se actualiza todo el objeto, para realizar una actualizacion parcial se debe usar app.patch)
 
-app.get('/user/:id', async (req, res) => {
+app.get('/users/:id', async (req, res) => {
     try{
-        const user = await user.findByIdAndUpdate(req.params.id, req.body, {new: true});
+        const user = await User.findByIdAndUpdate(req.params.id, req.body, {new: true});
         if(!user){
             return res.status(404).send();
         }
@@ -77,7 +77,7 @@ app.get('/user/:id', async (req, res) => {
 
 // eliminar un usuario por id
 
-app.delete('/user/:id', async (req, res) => {
+app.delete('/users/:id', async (req, res) => {
     try{
         const user = await user.findByIdAndDelete(req.params.id);
         if(!user){
