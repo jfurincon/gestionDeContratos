@@ -1,4 +1,4 @@
-import { Schema } from "mongoose";
+import mongoose, { Schema } from "mongoose";
 
 const contratoSchema = new Schema({
     "idRUP":Integer,
@@ -11,4 +11,20 @@ const contratoSchema = new Schema({
     "idCliente":Integer
 });
 
-export const Contrato = mongoose.model("Contrato", contratoSchema);
+const Contrato = mongoose.model("Contrato", contratoSchema);
+export default Contrato;
+
+export const insertJSONData = async (jsonData) => {
+    try{
+        if (Array.isArray(jsonData)) {
+            await Contrato.insertMany(jsonData);
+        } else {
+            const anexo = new Contrato(jsonData);
+            await anexo.save();
+        }
+        console.log('Datos cargados correctamente');
+    } catch (error) {
+        console.error('Error al cargar los datos');
+        throw error;
+    }
+};

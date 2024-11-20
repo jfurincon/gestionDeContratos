@@ -1,4 +1,4 @@
-import Anexo from '../models/anexoModel.js';
+import Anexo from '../models/modelAnexo';
 import FileSystem from 'fs';
 
 // procesar la carga de archivos JSON
@@ -10,7 +10,7 @@ export const uploadJSON = (req, res) => {
         }
         try{
             const jsonData = JSON.parse(data);
-            modelAnexo.insertJSONData(jsonData);
+            Anexo.insertJSONData(jsonData);
             res.send('Datos cargados correctamente');
         } catch (error) {
             res.send('Error al cargar los datos');
