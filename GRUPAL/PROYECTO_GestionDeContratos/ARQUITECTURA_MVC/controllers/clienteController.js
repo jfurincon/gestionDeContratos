@@ -17,3 +17,49 @@ export const uploadJSON = (req, res) => {
         }
     });
 };
+
+// post
+export const createCliente = async (req, res) => {
+    try{
+        let data = req.body;
+        await Cliente.create(data);
+        res.send("data inserted");
+    }catch(error){
+        console.log(error);
+    }
+};
+
+// get
+export const getClientes = async (req, res) => {
+    try{
+        let datos = await Cliente.find();
+        res.send(datos);
+    }catch(error){
+        console.log(error);
+    }
+};
+
+// put
+export const updateCliente = async (req, res) => {
+    try{
+        let data = req.body;
+        let id = req.params.idRUP;
+        await Cliente.findByIdAndUpdate(id, { $set: data }, { new: true });
+        let obs = await Cliente.find({ idRUP: id });
+        res.status(200).json(obs);
+    }catch(error){
+        console.log(error);
+    }
+};
+
+// delete
+export const deleteCliente = async (req, res) => {
+    try{
+        let id = req.params.idRUP;
+        await Cliente.findByIdAndDelete(id);
+        res.send("data deleted");
+    }catch(error){
+        console.log(error);
+    }
+};
+
