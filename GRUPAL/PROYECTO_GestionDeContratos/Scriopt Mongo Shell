@@ -1,0 +1,495 @@
+use gestionContratos;
+switched to db gestionContratos
+db.createCollection("contrato");
+{ ok: 1 }
+db.cliente.insertMany([
+  { idCliente: 1, nombreEntidad: "Alcaldia Municipal de Guasca", ubicacionCliente: "Guasca, Cundinamarca" },
+  { idCliente: 2, nombreEntidad: "Alcaldia Municipal de Gacheta", ubicacionCliente: "Gacheta, Cundinamarca" },
+  { idCliente: 3, nombreEntidad: "Alcaldia Municipal de Gachala", ubicacionCliente: "Gachala, Cundinamarca" },
+  { idCliente: 4, nombreEntidad: "Alcaldia Municipal de Soacha", ubicacionCliente: "Soacha, Cundinamarca" },
+  { idCliente: 5, nombreEntidad: "Servincoop", ubicacionCliente: "Gachala, Cundinamarca" },
+  { idCliente: 6, nombreEntidad: "ONG Corponintegras", ubicacionCliente: "Dato No Disponible" },
+  { idCliente: 7, nombreEntidad: "Union Temporal FYC", ubicacionCliente: "Guasca, Cundinamarca" },
+  { idCliente: 8, nombreEntidad: "Fausto Fernando Gonzalez Barrera", ubicacionCliente: "Dato No Disponible" },
+  { idCliente: 9, nombreEntidad: "Promosel Ingenieria Cia.LTDA.", ubicacionCliente: "Dato No Disponible" },
+  { idCliente: 10, nombreEntidad: "Arcelandia SAS", ubicacionCliente: "Guasca, Cundinamarca" }
+]);
+{
+  acknowledged: true,
+  insertedIds: {
+    '0': ObjectId('6743f68dcc39b950ddf8daf8'),
+    '1': ObjectId('6743f68dcc39b950ddf8daf9'),
+    '2': ObjectId('6743f68dcc39b950ddf8dafa'),
+    '3': ObjectId('6743f68dcc39b950ddf8dafb'),
+    '4': ObjectId('6743f68dcc39b950ddf8dafc'),
+    '5': ObjectId('6743f68dcc39b950ddf8dafd'),
+    '6': ObjectId('6743f68dcc39b950ddf8dafe'),
+    '7': ObjectId('6743f68dcc39b950ddf8daff'),
+    '8': ObjectId('6743f68dcc39b950ddf8db00'),
+    '9': ObjectId('6743f68dcc39b950ddf8db01')
+  }
+}
+db.anexos.insertMany([
+  { idAnexo: 1, documentoContrato: true, documentoConsorcio: true, actaFinal: false, actaInicio: true, certificacion: false },
+  { idAnexo: 2, documentoContrato: true, documentoConsorcio: false, actaFinal: false, actaInicio: false, certificacion: false },
+  { idAnexo: 3, documentoContrato: false, documentoConsorcio: false, actaFinal: false, actaInicio: true, certificacion: true },
+  { idAnexo: 4, documentoContrato: false, documentoConsorcio: false, actaFinal: false, actaInicio: false, certificacion: false },
+  { idAnexo: 5, documentoContrato: true, documentoConsorcio: true, actaFinal: true, actaInicio: true, certificacion: false },
+  { idAnexo: 6, documentoContrato: false, documentoConsorcio: false, actaFinal: true, actaInicio: true, certificacion: true },
+  { idAnexo: 7, documentoContrato: false, documentoConsorcio: true, actaFinal: false, actaInicio: true, certificacion: false },
+  { idAnexo: 8, documentoContrato: true, documentoConsorcio: true, actaFinal: false, actaInicio: false, certificacion: true },
+  { idAnexo: 9, documentoContrato: false, documentoConsorcio: false, actaFinal: true, actaInicio: true, certificacion: false },
+  { idAnexo: 10, documentoContrato: true, documentoConsorcio: false, actaFinal: false, actaInicio: true, certificacion: true }
+]);
+{
+  acknowledged: true,
+  insertedIds: {
+    '0': ObjectId('6743fa9ecc39b950ddf8db02'),
+    '1': ObjectId('6743fa9ecc39b950ddf8db03'),
+    '2': ObjectId('6743fa9ecc39b950ddf8db04'),
+    '3': ObjectId('6743fa9ecc39b950ddf8db05'),
+    '4': ObjectId('6743fa9ecc39b950ddf8db06'),
+    '5': ObjectId('6743fa9ecc39b950ddf8db07'),
+    '6': ObjectId('6743fa9ecc39b950ddf8db08'),
+    '7': ObjectId('6743fa9ecc39b950ddf8db09'),
+    '8': ObjectId('6743fa9ecc39b950ddf8db0a'),
+    '9': ObjectId('6743fa9ecc39b950ddf8db0b')
+  }
+}
+db.contrato.insertMany([
+  {
+    idRUP: 1,
+    codigoContrato: "125-2011",
+    descripcionContrato: "SUMINISTRO DE DOTACIÓN PARA LOS EMPLEADOS DE PUNTA, ESCUELAS DE FORMACIÓN ARTÍSTICA Y CULTURAL, Y ELEMENTOS PARA HOGARES COMUNITARIOS DE BIENESTAR EN GUASCA",
+    fechaInicio: new Date("2011-06-28"),
+    fechaFinalizacion: new Date("2012-08-01"),
+    valorSMMLV: 42,
+    valorContrato: 24167500
+  },
+  {
+    idRUP: 2,
+    codigoContrato: "08-2013",
+    descripcionContrato: "ADECUACIÓN Y MANTENIMIENTO DE LA ESCUELA PUNTA SAN ROQUE, VEREDA SAN ROQUE UBALA",
+    fechaInicio: new Date("2013-07-25"),
+    fechaFinalizacion: new Date("2013-12-31"),
+    valorSMMLV: 41,
+    valorContrato: 24457759
+  },
+  {
+    idRUP: 3,
+    codigoContrato: "OP-010-2021",
+    descripcionContrato: "CONSTRUCCIÓN DE UN PARQUE SALUDABLE EN LA INSPECCIÓN DE SANTA RITA GACHETÁ",
+    fechaInicio: new Date("2021-05-11"),
+    fechaFinalizacion: new Date("2021-06-10"),
+    valorSMMLV: 27,
+    valorContrato: 24544867
+  },
+  {
+    idRUP: 4,
+    codigoContrato: "038-2013",
+    descripcionContrato: "ADECUACIÓN Y MANTENIMIENTO DE INSTITUCIONES EDUCATIVAS DE UBALA: ESCUELA VEREDA SANTA BÁRBARA Y ESCUELA VEREDA SAN PEDRO BAJO",
+    fechaInicio: new Date("2014-02-12"),
+    fechaFinalizacion: new Date("2014-05-11"),
+    valorSMMLV: 60,
+    valorContrato: 37000000
+  },
+  {
+    idRUP: 5,
+    codigoContrato: "791-2013",
+    descripcionContrato: "SUMINISTRO DE COMPLEMENTOS NUTRICIONALES Y PURIFICADORES PARA MENORES DE 5 AÑOS EN SOACHA",
+    fechaInicio: new Date("2013-12-31"),
+    fechaFinalizacion: new Date("2013-12-31"),
+    valorSMMLV: 822,
+    valorContrato: 484600000
+  },
+  {
+    idRUP: 6,
+    codigoContrato: "200-12-4-403",
+    descripcionContrato: "CONTRATO DE SUMINISTRO PARA TRANSPORTE DE ALAMBRE DE PÚA, GRAPAS, FERTILIZANTES, CORRECTIVOS AL SUELO E INSECTICIDAS PARA LOS PROYECTOS EN CORPOGUAVIO",
+    fechaInicio: new Date("2013-12-27"),
+    fechaFinalizacion: new Date("2014-03-26"),
+    valorSMMLV: 290,
+    valorContrato: 179208722
+  },
+  
+  {
+    idRUP: 7,
+    codigoContrato: "142-2011",
+    descripcionContrato: "ADELANTAR A TODO COSTO EL MANTENIMIENTO Y ADECUACIÓN DE LA INFRAESTRUCTURA DE LA PLANTA DE TRATAMIENTO DE AGUA POTABLE PTAP DEL MUNICIPIO DE GACHALÁ CUNDINAMARCA",
+    fechaInicio: new Date("2011-11-08"),
+    fechaFinalizacion: new Date("2012-02-07"),
+    valorSMMLV: 112,
+    valorContrato: 59998760
+  },
+  {
+    idRUP: 8,
+    codigoContrato: "199-2011",
+    descripcionContrato: "ADELANTAR A TODO COSTO EL MEJORAMIENTO Y MANTENIMIENTO DE LA INFRAESTRUCTURA MUNICIPAL E INSPECCIONES DE MONTECRISTO, LOS ALPES Y RÍO NEGRO DEL MUNICIPIO DE GACHALÁ",
+    fechaInicio: null, // NO INFO
+    fechaFinalizacion: null, // NO INFO
+    valorSMMLV: 82,
+    valorContrato: 43746625
+  },
+  {
+    idRUP: 9,
+    codigoContrato: "CD-ASC-320-2012",
+    descripcionContrato: "CONTRATO DE SUMINISTRO DE 9.000 MERCADOS PARA LOS PROGRAMAS CON DESTINO A LA POBLACIÓN ADULTO MAYOR Y MUJERES, MADRES CABEZA DE HOGAR, EN BOYACÁ Y CASANARE",
+    fechaInicio: new Date("2012-12-01"),
+    fechaFinalizacion: new Date("2013-06-30"),
+    valorSMMLV: 699,
+    valorContrato: 412200000
+  },
+	{
+  idRUP: 10,
+  codigoContrato: "CD-ASC-320-2012",
+  descripcionContrato: "CONTRATO DE SUMINISTRO DE 9.000 MERCADOS PARA LOS PROGRAMAS CON DESTINO A LA POBLACIÓN ADULTO MAYOR Y MUJERES, MADRES CABEZA DE HOGAR, EN BOYACÁ Y CASANARE",
+  fechaInicio: new Date("2012-12-01"),
+  fechaFinalizacion: new Date("2013-06-30"),
+  valorSMMLV: 699,
+  valorContrato: 412200000
+	}
+]);
+{
+  acknowledged: true,
+  insertedIds: {
+    '0': ObjectId('6743fe9ecc39b950ddf8db0c'),
+    '1': ObjectId('6743fe9ecc39b950ddf8db0d'),
+    '2': ObjectId('6743fe9ecc39b950ddf8db0e'),
+    '3': ObjectId('6743fe9ecc39b950ddf8db0f'),
+    '4': ObjectId('6743fe9ecc39b950ddf8db10'),
+    '5': ObjectId('6743fe9ecc39b950ddf8db11'),
+    '6': ObjectId('6743fe9ecc39b950ddf8db12'),
+    '7': ObjectId('6743fe9ecc39b950ddf8db13'),
+    '8': ObjectId('6743fe9ecc39b950ddf8db14'),
+    '9': ObjectId('6743fe9ecc39b950ddf8db15')
+  }
+}
+db.bienesyServicios.insertMany([
+  { codigoBienesyServicios: 101015, descripcionActividad: "Animales de granja" },
+  { codigoBienesyServicios: 101016, descripcionActividad: "Pájaros y aves de corral" },
+  { codigoBienesyServicios: 101017, descripcionActividad: "Peces" },
+  { codigoBienesyServicios: 101018, descripcionActividad: "Mariscos e invertebrados acuáticos" },
+  { codigoBienesyServicios: 101019, descripcionActividad: "Insectos" },
+  { codigoBienesyServicios: 101020, descripcionActividad: "Animales salvajes" },
+  { codigoBienesyServicios: 101113, descripcionActividad: "Tratamientos para los animales domésticos y accesorios y equipo" },
+  { codigoBienesyServicios: 101215, descripcionActividad: "Pienso para ganado" },
+  { codigoBienesyServicios: 101216, descripcionActividad: "Alimento para pájaros y aves de corral" },
+  { codigoBienesyServicios: 101217, descripcionActividad: "Alimento para peces" },
+  { codigoBienesyServicios: 101218, descripcionActividad: "Alimento para perros y gatos" }
+]);
+{
+  acknowledged: true,
+  insertedIds: {
+    '0': ObjectId('6743ffdacc39b950ddf8db16'),
+    '1': ObjectId('6743ffdacc39b950ddf8db17'),
+    '2': ObjectId('6743ffdacc39b950ddf8db18'),
+    '3': ObjectId('6743ffdacc39b950ddf8db19'),
+    '4': ObjectId('6743ffdacc39b950ddf8db1a'),
+    '5': ObjectId('6743ffdacc39b950ddf8db1b'),
+    '6': ObjectId('6743ffdacc39b950ddf8db1c'),
+    '7': ObjectId('6743ffdacc39b950ddf8db1d'),
+    '8': ObjectId('6743ffdacc39b950ddf8db1e'),
+    '9': ObjectId('6743ffdacc39b950ddf8db1f'),
+    '10': ObjectId('6743ffdacc39b950ddf8db20')
+  }
+}
+db.usuario.insertMany([
+  { idUsuario: 1, nombreUsuario: "Vanessa Urrego", cargoUsuario: "Sub Dirección" },
+  { idUsuario: 2, nombreUsuario: "Freddy Urrego", cargoUsuario: "Gerente" },
+  { idUsuario: 3, nombreUsuario: "Johana Gutierrez", cargoUsuario: "Asesora de Cámara de Comercio" },
+  { idUsuario: 4, nombreUsuario: "Paula Gonzalez", cargoUsuario: "Gestora de Base de Datos" },
+  { idUsuario: 5, nombreUsuario: "Juan Urrego", cargoUsuario: "Gestora de Base de Datos" }
+]);
+{
+  acknowledged: true,
+  insertedIds: {
+    '0': ObjectId('6744017bcc39b950ddf8db21'),
+    '1': ObjectId('6744017bcc39b950ddf8db22'),
+    '2': ObjectId('6744017bcc39b950ddf8db23'),
+    '3': ObjectId('6744017bcc39b950ddf8db24'),
+    '4': ObjectId('6744017bcc39b950ddf8db25')
+  }
+}
+db.anexos.deleteOne({ "idAnexo": 5 });
+{
+  acknowledged: true,
+  deletedCount: 1
+}
+db.anexos.deleteMany({ "documentoContrato": false });
+{
+  acknowledged: true,
+  deletedCount: 5
+}
+db.anexos.updateOne(
+  { "idAnexo": 3 }, 
+  { $set: { "documentoConsorcio": true } }
+);
+{
+  acknowledged: true,
+  insertedId: null,
+  matchedCount: 0,
+  modifiedCount: 0,
+  upsertedCount: 0
+}
+db.anexos.updateOne(
+  { "idAnexo": 2 }, 
+  { $set: { "documentoConsorcio": true } }
+);
+{
+  acknowledged: true,
+  insertedId: null,
+  matchedCount: 1,
+  modifiedCount: 1,
+  upsertedCount: 0
+}
+db.contrato.updateOne(
+  { "idRUP": 4 }, 
+  { $set: { "descripcionContrato": "Nuevo Descripción de Contrato" } }
+);
+{
+  acknowledged: true,
+  insertedId: null,
+  matchedCount: 1,
+  modifiedCount: 1,
+  upsertedCount: 0
+}
+db.anexos.updateMany(
+  { "documentoContrato": true },
+  { $set: { "actaFinal": true } }
+);
+{
+  acknowledged: true,
+  insertedId: null,
+  matchedCount: 4,
+  modifiedCount: 4,
+  upsertedCount: 0
+}
+db.contrato.updateOne(
+  { "idRUP": 5 },
+  { $set: { "valorContrato": 500000000 } }
+);
+{
+  acknowledged: true,
+  insertedId: null,
+  matchedCount: 1,
+  modifiedCount: 1,
+  upsertedCount: 0
+}
+db.usuario.updateOne(
+  { "idUsuario": 1 },
+  { $set: { "cargoUsuario": "Nuevo Cargo" } }
+);
+{
+  acknowledged: true,
+  insertedId: null,
+  matchedCount: 1,
+  modifiedCount: 1,
+  upsertedCount: 0
+}
+db.BienYServicio.find({ descripcion: { $regex: keyword } });
+ReferenceError: keyword is not defined
+db.Contrato.find({ fechaFin: { $gte: new Date() } });
+db.bienesyServicios.find({ descripcion: { $regex: /animales/i } })
+db.contrato.find({ fechaFinalizacion: { $gte: new Date() } })
+db.contrato.find({
+  fechaFinalizacion: { $gte: new Date() }
+})
+db.BienYServicio.find({ descripcion: { $regex: animales, $options: 'i' } });
+ReferenceError: animales is not defined
+db.BienYServicio.find({ descripcion: { $regex: "keyword", $options: 'i' } });
+db.Contrato.find().sort({ valorContrato: -1 }).forEach(printjson)
+db.Contrato.findOne()
+null
+db.contrato.findOne()
+{
+  _id: ObjectId('6743fe9ecc39b950ddf8db0c'),
+  idRUP: 1,
+  codigoContrato: '125-2011',
+  descripcionContrato: 'SUMINISTRO DE DOTACIÓN PARA LOS EMPLEADOS DE PUNTA, ESCUELAS DE FORMACIÓN ARTÍSTICA Y CULTURAL, Y ELEMENTOS PARA HOGARES COMUNITARIOS DE BIENESTAR EN GUASCA',
+  fechaInicio: 2011-06-28T00:00:00.000Z,
+  fechaFinalizacion: 2012-08-01T00:00:00.000Z,
+  valorSMMLV: 42,
+  valorContrato: 24167500
+}
+db.bienyServicios.find({ descripcion: { $regex: keyword } });
+ReferenceError: keyword is not defined
+db.bienyServicios.find({ descripcion: { $regex: animales } });
+ReferenceError: animales is not defined
+db.contrato.find({ fechaFin: { $gte: new Date() } });
+db.contrato.find().sort({ valorContrato: -1 }).forEach(printjson)
+{
+  _id: ObjectId('6743fe9ecc39b950ddf8db10'),
+  idRUP: 5,
+  codigoContrato: '791-2013',
+  descripcionContrato: 'SUMINISTRO DE COMPLEMENTOS NUTRICIONALES Y PURIFICADORES PARA MENORES DE 5 AÑOS EN SOACHA',
+  fechaInicio: 2013-12-31T00:00:00.000Z,
+  fechaFinalizacion: 2013-12-31T00:00:00.000Z,
+  valorSMMLV: 822,
+  valorContrato: 500000000
+}
+{
+  _id: ObjectId('6743fe9ecc39b950ddf8db14'),
+  idRUP: 9,
+  codigoContrato: 'CD-ASC-320-2012',
+  descripcionContrato: 'CONTRATO DE SUMINISTRO DE 9.000 MERCADOS PARA LOS PROGRAMAS CON DESTINO A LA POBLACIÓN ADULTO MAYOR Y MUJERES, MADRES CABEZA DE HOGAR, EN BOYACÁ Y CASANARE',
+  fechaInicio: 2012-12-01T00:00:00.000Z,
+  fechaFinalizacion: 2013-06-30T00:00:00.000Z,
+  valorSMMLV: 699,
+  valorContrato: 412200000
+}
+{
+  _id: ObjectId('6743fe9ecc39b950ddf8db15'),
+  idRUP: 10,
+  codigoContrato: 'CD-ASC-320-2012',
+  descripcionContrato: 'CONTRATO DE SUMINISTRO DE 9.000 MERCADOS PARA LOS PROGRAMAS CON DESTINO A LA POBLACIÓN ADULTO MAYOR Y MUJERES, MADRES CABEZA DE HOGAR, EN BOYACÁ Y CASANARE',
+  fechaInicio: 2012-12-01T00:00:00.000Z,
+  fechaFinalizacion: 2013-06-30T00:00:00.000Z,
+  valorSMMLV: 699,
+  valorContrato: 412200000
+}
+{
+  _id: ObjectId('6743fe9ecc39b950ddf8db11'),
+  idRUP: 6,
+  codigoContrato: '200-12-4-403',
+  descripcionContrato: 'CONTRATO DE SUMINISTRO PARA TRANSPORTE DE ALAMBRE DE PÚA, 
+GRAPAS, FERTILIZANTES, CORRECTIVOS AL SUELO E INSECTICIDAS PARA LOS PROYECTOS EN CORPOGUAVIO',
+  fechaInicio: 2013-12-27T00:00:00.000Z,
+  fechaFinalizacion: 2014-03-26T00:00:00.000Z,
+  valorSMMLV: 290,
+  valorContrato: 179208722
+}
+{
+  _id: ObjectId('6743fe9ecc39b950ddf8db12'),
+  idRUP: 7,
+  codigoContrato: '142-2011',
+  descripcionContrato: 'ADELANTAR A TODO COSTO EL MANTENIMIENTO Y ADECUACIÓN DE LA INFRAESTRUCTURA DE LA PLANTA DE TRATAMIENTO DE AGUA POTABLE PTAP DEL MUNICIPIO DE GACHALÁ CUNDINAMARCA',
+  fechaInicio: 2011-11-08T00:00:00.000Z,
+  fechaFinalizacion: 2012-02-07T00:00:00.000Z,
+  valorSMMLV: 112,
+  valorContrato: 59998760
+}
+{
+  _id: ObjectId('6743fe9ecc39b950ddf8db13'),
+  idRUP: 8,
+  codigoContrato: '199-2011',
+  descripcionContrato: 'ADELANTAR A TODO COSTO EL MEJORAMIENTO Y MANTENIMIENTO DE LA INFRAESTRUCTURA MUNICIPAL E INSPECCIONES DE MONTECRISTO, LOS ALPES Y RÍO NEGRO DEL MUNICIPIO DE GACHALÁ',
+  fechaInicio: null,
+  fechaFinalizacion: null,
+  valorSMMLV: 82,
+  valorContrato: 43746625
+}
+{
+  _id: ObjectId('6743fe9ecc39b950ddf8db0f'),
+  idRUP: 4,
+  codigoContrato: '038-2013',
+  descripcionContrato: 'Nuevo Descripción de Contrato',
+  fechaInicio: 2014-02-12T00:00:00.000Z,
+  fechaFinalizacion: 2014-05-11T00:00:00.000Z,
+  valorSMMLV: 60,
+  valorContrato: 37000000
+}
+{
+  _id: ObjectId('6743fe9ecc39b950ddf8db0e'),
+  idRUP: 3,
+  codigoContrato: 'OP-010-2021',
+  descripcionContrato: 'CONSTRUCCIÓN DE UN PARQUE SALUDABLE EN LA INSPECCIÓN DE SANTA RITA GACHETÁ',
+  fechaInicio: 2021-05-11T00:00:00.000Z,
+  fechaFinalizacion: 2021-06-10T00:00:00.000Z,
+  valorSMMLV: 27,
+  valorContrato: 24544867
+}
+{
+  _id: ObjectId('6743fe9ecc39b950ddf8db0d'),
+  idRUP: 2,
+  codigoContrato: '08-2013',
+  descripcionContrato: 'ADECUACIÓN Y MANTENIMIENTO DE LA ESCUELA PUNTA SAN ROQUE, VEREDA SAN ROQUE UBALA',
+  fechaInicio: 2013-07-25T00:00:00.000Z,
+  fechaFinalizacion: 2013-12-31T00:00:00.000Z,
+  valorSMMLV: 41,
+  valorContrato: 24457759
+}
+{
+  _id: ObjectId('6743fe9ecc39b950ddf8db0c'),
+  idRUP: 1,
+  codigoContrato: '125-2011',
+  descripcionContrato: 'SUMINISTRO DE DOTACIÓN PARA LOS EMPLEADOS DE PUNTA, ESCUELAS DE FORMACIÓN ARTÍSTICA Y CULTURAL, Y ELEMENTOS PARA HOGARES COMUNITARIOS DE BIENESTAR EN GUASCA',
+  fechaInicio: 2011-06-28T00:00:00.000Z,
+  fechaFinalizacion: 2012-08-01T00:00:00.000Z,
+  valorSMMLV: 42,
+  valorContrato: 24167500
+}
+db.bienesyServicios.find({ descripcion: { $regex: "peces", $options: "i" } }).forEach(printjson)
+db.contrato.find({ fechaFin: { $gte: new Date() } }).forEach(printjson)
+db.anexos.find({ 
+    $or: [
+        { documentoContrato: false }, 
+        { documentoConsorcio: false }, 
+        { actaFinal: false }, 
+        { actaInicio: false }, 
+        { certificacion: false }
+    ]
+}).forEach(printjson
+SyntaxError: Unexpected token, expected "," (9:20)
+
+  7 |         { certificacion: false }
+  8 |     ]
+> 9 | }).forEach(printjson
+    |                     ^
+db.Anexo.find({ 
+    $or: [
+        { documentoContrato: false }, 
+        { documentoConsorcio: false }, 
+        { actaFinal: false }, 
+        { actaInicio: false }, 
+        { certificacion: false }
+    ]
+}).forEach(printjson)
+db.contrato.find().sort({ fechaInicio: -1 }).limit(1).forEach(printjson)
+{
+  _id: ObjectId('6743fe9ecc39b950ddf8db0e'),
+  idRUP: 3,
+  codigoContrato: 'OP-010-2021',
+  descripcionContrato: 'CONSTRUCCIÓN DE UN PARQUE SALUDABLE EN LA INSPECCIÓN DE SANTA RITA GACHETÁ',
+  fechaInicio: 2021-05-11T00:00:00.000Z,
+  fechaFinalizacion: 2021-06-10T00:00:00.000Z,
+  valorSMMLV: 27,
+  valorContrato: 24544867
+}
+db.cliente.find({ ubicacionCliente: { $regex: "guasca", $options: "i" } }).forEach(printjson)
+{
+  _id: ObjectId('6743f68dcc39b950ddf8daf8'),
+  idCliente: 1,
+  nombreEntidad: 'Alcaldia Municipal de Guasca',
+  ubicacionCliente: 'Guasca, Cundinamarca'
+}
+{
+  _id: ObjectId('6743f68dcc39b950ddf8dafe'),
+  idCliente: 7,
+  nombreEntidad: 'Union Temporal FYC',
+  ubicacionCliente: 'Guasca, Cundinamarca'
+}
+{
+  _id: ObjectId('6743f68dcc39b950ddf8db01'),
+  idCliente: 10,
+  nombreEntidad: 'Arcelandia SAS',
+  ubicacionCliente: 'Guasca, Cundinamarca'
+}
+db.anexos.find({ certificacion: true }).forEach(printjson)
+{
+  _id: ObjectId('6743fa9ecc39b950ddf8db09'),
+  idAnexo: 8,
+  documentoContrato: true,
+  documentoConsorcio: true,
+  actaFinal: true,
+  actaInicio: false,
+  certificacion: true
+}
+{
+  _id: ObjectId('6743fa9ecc39b950ddf8db0b'),
+  idAnexo: 10,
+  documentoContrato: true,
+  documentoConsorcio: false,
+  actaFinal: true,
+  actaInicio: true,
+  certificacion: true
+}
