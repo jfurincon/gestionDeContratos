@@ -22,8 +22,14 @@ export const uploadJSON = (req, res) => {
 export const createCliente = async (req, res) => {
     try{
         let data = req.body;
-        await Cliente.create(data);
-        res.send("data inserted");
+        // verificar si el cliente ya existe
+        let cliente = await Cliente.find({ idCliente: data.idCliente });
+        if (cliente){
+            res.send("Cliente ya existe");
+        } else {
+            await Cliente.create(data);
+            res.send("data inserted");
+        }
     }catch(error){
         console.log(error);
     }
@@ -33,6 +39,17 @@ export const createCliente = async (req, res) => {
 export const getClientes = async (req, res) => {
     try{
         let datos = await Cliente.find();
+        res.send(datos);
+    }catch(error){
+        console.log(error);
+    }
+};
+
+// get cliente por palabra clave en la ubicacion 
+export const getClienteByKeyword = async (req, res) => {
+    try{
+        let keyword = req.params.keyword;
+        let datos = await Cliente.find({ ubicacionCliente: { $regex: keyword } });
         res.send(datos);
     }catch(error){
         console.log(error);

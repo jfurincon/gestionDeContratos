@@ -7,8 +7,7 @@ const contratoSchema = new Schema({
     "fechaInicio":Date,
     "fechaFin":Date,
     "valorSMMLV":Integer,
-    "valorContrato":Integer,
-    "idCliente":Integer
+    "valorContrato":Integer
 });
 
 const Contrato = mongoose.model("Contrato", contratoSchema);

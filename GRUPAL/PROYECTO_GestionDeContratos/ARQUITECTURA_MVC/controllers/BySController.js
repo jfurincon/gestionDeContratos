@@ -22,8 +22,14 @@ export const uploadJSON = (req, res) => {
 export const createByS = async (req, res) => {
     try{
         let data = req.body;
-        await BienYServicio.create(data);
-        res.send("data inserted");
+        // verificar si el codigo ya existe
+        let bys = await BienYServicio.find({ codigoByS: data.codigoByS });
+        if (bys){
+            res.send("Código ya existe");
+        } else {
+            await BienYServicio.create(data);
+            res.send("data inserted");
+        }
     }catch(error){
         console.log(error);
     }
@@ -33,6 +39,17 @@ export const createByS = async (req, res) => {
 export const getByS = async (req, res) => {
     try{
         let datos = await BienYServicio.find();
+        res.send(datos);
+    }catch(error){
+        console.log(error);
+    }
+};
+
+// get ByS por palabra clave en la descripción
+export const getBySByKeyword = async (req, res) => {
+    try{
+        let keyword = req.params.keyword;
+        let datos = await BienYServicio.find({ descripcion: { $regex: keyword } });
         res.send(datos);
     }catch(error){
         console.log(error);

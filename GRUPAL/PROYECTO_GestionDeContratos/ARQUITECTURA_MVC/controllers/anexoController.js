@@ -39,6 +39,26 @@ export const getAnexos = async (req, res) => {
     }
 };
 
+// get documentos pendientes
+export const getAnexosPendientes = async (req, res) => {
+    try{
+        let datos = await Anexo.find({ $or: [{ documentoContrato: false }, { documentoConsorcio: false }, { actaFinal: false }, { actaInicio: false }, { certificacion: false }] });
+        res.send(datos);
+    }catch(error){
+        console.log(error);
+    }
+};
+
+// get anexo que tengan certificación
+export const getAnexosCertificados = async (req, res) => {
+    try{
+        let datos = await Anexo.find({ certificacion: true });
+        res.send(datos);
+    }catch(error){
+        console.log(error);
+    }
+};
+
 // put
 export const updateAnexo = async (req, res) => {
     try{

@@ -2,7 +2,6 @@ import mongoose, { Schema } from "mongoose";
 
 const anexoSchema = new Schema({
     "idAnexo":Integer,
-    "idRUP":Integer,
     "documentoContrato":Boolean,
     "documentoConsorcio":Boolean,
     "actaFinal":Boolean,

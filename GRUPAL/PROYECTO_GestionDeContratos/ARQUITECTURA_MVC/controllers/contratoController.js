@@ -39,6 +39,36 @@ export const getContratos = async (req, res) => {
     }
 };
 
+// get contratos activos
+export const getContratosActivos = async (req, res) => {
+    try{
+        let datos = await Contrato.find({ fechaFin: { $gte: new Date() } });
+        res.send(datos);
+    }catch(error){
+        console.log(error);
+    }
+};
+
+// get valor contrato mayor a menor
+export const getContratosValor = async (req, res) => {
+    try{
+        let datos = await Contrato.find().sort({ valorContrato: -1 });
+        res.send(datos);
+    }catch(error){
+        console.log(error);
+    }
+};
+
+// get contrato mas reciente
+export const getContratoReciente= async (req, res) => {
+    try{
+        let datos = await Contrato.find().sort({ fechaInicio: -1 }).limit(1);
+        res.send(datos);
+    }catch(error){
+        console.log(error);
+    }
+};
+
 // put
 export const updateContrato = async (req, res) => {
     try{
