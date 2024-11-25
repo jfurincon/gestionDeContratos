@@ -1338,23 +1338,17 @@ INNER JOIN contratobys bys ON bys.idRUPFK = c.idRUP
 INNER JOIN bienesyservicios b ON b.codigoBienesyServicios = bys.codigoBienesyServiciosFK
 WHERE b.descripcionActividad = "Minerales metalicos";
 
-USE gestionContratos;
-
-SELECT count(idRUP)
-FROM cliente;
-
-# TRIGGERS - AUN NO SE HAN CORRIDO
-
 # trigger de evitar contratos duplicados
 DELIMITER //
 CREATE TRIGGER contratoDuplicado
-AFTER INSERT ON contrato
+BEFORE INSERT ON contrato
 FOR EACH ROW
 begin
-	if exists (SELECT 1 FROM contrato WHERE codigoContrato = new.codigoContrato) then
+	if exists (SELECT 1 FROM contrato WHERE codigoContrato = NEW.codigoContrato) then
     signal sqlstate "45000" set message_text = "El codigo ya existe";
     end if;
 end;
+//
 DELIMITER ;
 
 # trigger de eliminar de una tabla importante, se inserte en una tabla de <<ELIMINADOS>>
@@ -1371,17 +1365,74 @@ valorContrato int not null
 );
 
 DELIMITER //
-CREATE TRIGGER contratoDuplicado
+CREATE TRIGGER inactivarContrato
 BEFORE DELETE ON contrato
 FOR EACH ROW
 begin
-	INSERT INTO contratosEliminados values(old.idRUP, old.idClienteFK,
+	INSERT INTO contratosEliminados (idRUP, idClienteFK, codigoContrato, descripcionContrato,
+    fechaInicio, fechaFinalizacion, valorSMMLV, valorContrato) values(old.idRUP, old.idClienteFK,
     old.codigoContrato, old.descripcionContrato, old.fechaInicio, old.fechaFinalizacion,
-    old.valorSMMLV, old.valorContrato, NOW())
+    old.valorSMMLV, old.valorContrato);
 end;
+//
 DELIMITER ;
 
+# ejemplo de uso del trigger -------------------------------------------------
+INSERT INTO contrato VALUES("80","12jjjj","Nada","2024/11/24","2024/11/25",433,433000000,3);
 
+DELETE FROM contrato
+WHERE idRUP = "80";
+
+SELECT * FROM contratosEliminados;
+
+DELETE FROM contratosEliminados
+WHERE idRUP = "80";
+# ----------------------------------------------------------------------------
+##############################################################################
+# MODIFICACIONES Y CORRECCIONES ----------------------------------------------
+use gestioncontratos;
+
+/*
+anadimos la nueva columna a nuestra tabla debil
+ya que inicialmente esta no contaba con PK
+*/
+ALTER TABLE contratoByS
+ADD COLUMN idDebil int;
+
+/*
+Teniendo en cuenta que el nuevo campo estará vacío para
+todos los registros, inducimos valores únicos para cada uno
+*/ 
+SET @contador = 0;
+
+UPDATE contratoByS
+SET idDebil = (@contador := @contador + 1);
+
+SELECT * FROM contratoByS;
+
+# cambios en restricciones y limites
+
+ALTER TABLE contrato
+MODIFY COLUMN codigoContrato VARCHAR(30);
+
+ALTER TABLE contrato
+ADD CONSTRAINT unique_codigo UNIQUE (codigoContrato); # ERROR POR LOS "NO DATA"
+
+ALTER TABLE contrato
+MODIFY COLUMN descripcionContrato VARCHAR(500);
+
+ALTER TABLE anexos
+ADD CONSTRAINT unique_idRUPFK UNIQUE (idRUPFK);
+
+ALTER TABLE bienesyservicios
+MODIFY COLUMN descripcionActividad VARCHAR(100);
+
+ALTER TABLE cliente
+MODIFY COLUMN nombreEntidad VARCHAR(100);
+
+ALTER TABLE cliente
+MODIFY COLUMN ubicacionCliente VARCHAR(50);
+#---------------------------------------------------------------
 
 
 
